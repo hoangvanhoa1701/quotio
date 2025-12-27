@@ -160,6 +160,27 @@ enum AIProvider: String, CaseIterable, Codable, Identifiable {
             return false
         }
     }
+    
+    /// Whether this provider can be added manually (via OAuth, CLI login, or file import)
+    /// Cursor is excluded because it only reads from local Cursor app database for quota tracking
+    var supportsManualAuth: Bool {
+        switch self {
+        case .cursor:
+            return false  // Only reads from local Cursor database, not a real provider
+        default:
+            return true
+        }
+    }
+    
+    /// Whether this provider is quota-tracking only (not a real provider that can route requests)
+    var isQuotaTrackingOnly: Bool {
+        switch self {
+        case .cursor:
+            return true  // Only for tracking Cursor usage, not a provider
+        default:
+            return false
+        }
+    }
 }
 
 // MARK: - Proxy Status

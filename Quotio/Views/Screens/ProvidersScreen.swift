@@ -154,9 +154,21 @@ struct ProvidersScreen: View {
     
     // MARK: - Add Provider Section
     
+    /// Providers that can be added manually (excludes quota-tracking-only providers like Cursor)
+    private var addableProviders: [AIProvider] {
+        if modeManager.isFullMode {
+            // In Full Mode, only show providers that support manual auth
+            return AIProvider.allCases.filter { $0.supportsManualAuth }
+        } else {
+            // In Quota-Only mode, show providers that support quota tracking AND can be added manually
+            // Cursor is auto-detected from local database, so it shouldn't be in "Add Provider"
+            return AIProvider.allCases.filter { $0.supportsQuotaOnlyMode && $0.supportsManualAuth }
+        }
+    }
+    
     private var addProviderSection: some View {
         Section {
-            ForEach(AIProvider.allCases) { provider in
+            ForEach(addableProviders) { provider in
                 Button {
                     if provider == .vertex {
                         isImporterPresented = true
