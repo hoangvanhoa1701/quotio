@@ -5,6 +5,27 @@ All notable changes to Quotio will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.3] - 2025-12-27
+
+### Fixed
+
+- Proxy process not terminating after running for a while
+- Orphan proxy processes remaining after app quit
+- Proxy still running when quitting app from menu bar
+
+### Added
+
+- Loading indicator in sidebar during proxy startup
+- Force termination with timeout and SIGKILL fallback for reliable proxy shutdown
+- Kill-by-port cleanup to handle orphan processes
+- Claude Code configuration storage option (global vs project-local)
+- Dev build distinction with separate app icon
+
+### Changed
+
+- Menu bar now persists when main window is closed (app runs in background)
+- Improved build configuration with xcconfig support for dev/prod separation
+
 ## [0.1.0] - 2025-12-26
 
 ### Added
